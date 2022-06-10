@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -30,7 +31,7 @@ public class OrderDetail {
     @OneToOne
     private Order order;
     
-    @OneToOne
+    @ManyToOne
     private Product product;
     
     public OrderDetail() {
