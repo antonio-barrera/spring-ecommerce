@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -40,4 +41,21 @@ public class ProductController {
         return "/product/create";
     }
     
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable Integer id, Model model) {
+        model.addAttribute("product", productService.get(id));
+        return "product/edit";
+    }
+    
+    @PostMapping("/update")
+    public String update(Product product) {
+        productService.update(product);
+        return "redirect:/product";
+    }
+    
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable Integer id) {
+        productService.delete(id);
+        return "redirect:/product";
+    }
 }
