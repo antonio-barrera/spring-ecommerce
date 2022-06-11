@@ -7,6 +7,7 @@ package com.ecommerce.service;
 import com.ecommerce.exception.ProductNotFoundException;
 import com.ecommerce.model.Product;
 import com.ecommerce.repository.ProductRepository;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +30,11 @@ public class ProductServiceImpl implements ProductService {
     public Product get(Integer id) {
         return productRepository.findById(id)
                 .orElseThrow(() -> new ProductNotFoundException(id));
+    }
+    
+    @Override
+    public List<Product> getAll() {
+        return productRepository.findAll();
     }
 
     @Override
