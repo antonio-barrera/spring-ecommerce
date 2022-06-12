@@ -17,7 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
  * @author jeant
  */
 @Service
-public class UploadFileService {
+public class FileService {
     
     private final String folder = "images//";
     
