@@ -35,50 +35,14 @@
             <!-- Page Features -->
             <div class="row text-center">
 
-                <div class="col-lg-3 col-md-6 mb-4">
+                <div class="col-lg-3 col-md-6 mb-4" th:each="product: ${products}">
                     <div class="card h-100">
-                        <img class="card-img-top" src="https://api.lorem.space/image?w=500&h=325" alt="">
+                        <img class="card-img-top" th:src="@{/images/{img} (img=${product.image})}" alt="${product.description}">
                         <div class="card-body">
-                            <p class="card-text">Product name.</p>
+                            <p class="card-text" th:text="${product.name}"></p>
                         </div>
                         <div class="card-footer">
                             <a href="productohome.html" class="btn btn-success">See product</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="card h-100">
-                        <img class="card-img-top" src="https://api.lorem.space/image?w=500&h=325" alt="">
-                        <div class="card-body">
-                            <p class="card-text">Product name.</p>
-                        </div>
-                        <div class="card-footer">
-                            <a href="#" class="btn btn-success">See product</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="card h-100">
-                        <img class="card-img-top" src="https://api.lorem.space/image?w=500&h=325" alt="">
-                        <div class="card-body">
-                            <p class="card-text">Product name.</p>
-                        </div>
-                        <div class="card-footer">
-                            <a href="#" class="btn btn-success">See product</a>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="card h-100">
-                        <img class="card-img-top" src="https://api.lorem.space/image?w=500&h=325" alt="">
-                        <div class="card-body">
-                            <p class="card-text">Product name.</p>
-                        </div>
-                        <div class="card-footer">
-                            <a href="#" class="btn btn-success">See product</a>
                         </div>
                     </div>
                 </div>
