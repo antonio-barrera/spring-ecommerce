@@ -58,4 +58,13 @@ public class ProductController {
         productService.delete(id);
         return "redirect:/product";
     }
+    
+    @PostMapping("/save")
+    public String save(Product product) {
+        User user = new User(1, "", "", "", "", "", "", "");
+        product.setUser(user);
+        productService.save(product);
+        LOGGER.info("Este es el objeto producto {}", product);
+        return "redirect:/product";
+    }
 }
