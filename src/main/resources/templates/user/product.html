@@ -52,37 +52,57 @@
         <!-- Page Content -->
         <div class="container">
 
-            <!-- Jumbotron Header -->
-            <header class="jumbotron my-4">
-                <h1 class="display-3">Welcome to Spring Ecommerce 2021</h1>
-                <p class="lead">Your online products store</p>
-            </header>
+            <!-- Page Heading/Breadcrumbs -->
+            <h1 class="mt-4 mb-3">
+                Spring eCommerce <small>Product</small>
+            </h1>
 
-            <!-- Page Features -->
-            <div class="row text-center">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+                <li class="breadcrumb-item active">Product</li>
+            </ol>
 
-                <div class="col-lg-3 col-md-6 mb-4" th:each="product: ${products}">
-                    <div class="card h-100">
-                        <img class="card-img-top" th:src="@{/images/{img} (img=${product.image})}" alt="${product.description}">
-                        <div class="card-body">
-                            <p class="card-text" th:text="${product.name}"></p>
+            <!-- Blog Post -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <a href="#"> 
+                                <img class="img-fluid rounded" src="http://placehold.it/500x325">
+                            </a>
                         </div>
-                        <div class="card-footer">
-                            <a th:href="@{/product/{id} (id=${product.id})}" class="btn btn-success">See product</a>
+                        <div class="col-lg-6">
+                            <form action="shopping-cart.html" method="POST">
+                                <h2 class="card-title">Product Name</h2>
+
+                                <ul class="list-group">
+                                    <li class="list-group-item"><h5>Price:  </h5></li>
+                                    <li class="list-group-item">
+                                        <p>Description:</p>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <h6>
+                                            Quantity: <input type="number" id="quantity" name="quantity" autocomplete="off" min="1" max="5" value="1">
+                                        </h6>
+                                    </li>
+                                </ul>
+
+                                <button type="submit"  class="btn btn-dark">Add to shopping cart </button>
+
+                            </form>
                         </div>
                     </div>
                 </div>
-
             </div>
-            <!-- /.row -->
 
         </div>
+        <!-- /.container -->
 
         <!-- Footer -->
         <div th:include="user/template.html::footer"></div>
         <!--<footer class="py-5 bg-dark">
             <div class="container">
-                <p class="m-0 text-center text-white">Copyright &copy; Spring eCommerce 2021</p>
+                <p class="m-0 text-center text-white">Copyright &copy; Spring eCommerce 2020</p>
             </div>
         </footer>-->
 
