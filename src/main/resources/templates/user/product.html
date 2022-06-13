@@ -68,17 +68,17 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <a href="#"> 
-                                <img class="img-fluid rounded" src="http://placehold.it/500x325">
+                                <img class="img-fluid rounded" th:src="@{/images/{image} (image=${product.image})}">
                             </a>
                         </div>
                         <div class="col-lg-6">
                             <form action="shopping-cart.html" method="POST">
-                                <h2 class="card-title">Product Name</h2>
+                                <h2 class="card-title" th:text="${product.name}"></h2>
 
                                 <ul class="list-group">
-                                    <li class="list-group-item"><h5>Price:  </h5></li>
+                                    <li class="list-group-item"><h5 th:text="'Price: ' + ${product.price}"></h5></li>
                                     <li class="list-group-item">
-                                        <p>Description:</p>
+                                        <p th:text="'Description: ' + ${product.description}"></p>
                                     </li>
                                     <li class="list-group-item">
                                         <h6>

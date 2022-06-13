@@ -34,7 +34,8 @@ public class HomeController {
     }
     
     @GetMapping("product/{id}")
-    public String product(@PathVariable Integer id) {
+    public String product(@PathVariable Integer id, Model model) {
+        model.addAttribute("product", productService.get(id));
         LOGGER.info("Product: {}", id);
         return "user/product";
     }
