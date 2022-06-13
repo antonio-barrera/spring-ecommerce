@@ -10,6 +10,7 @@
 
         <title>Spring eCommerce</title>
 
+
         <!-- Bootstrap core CSS -->
         <link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet" type="text/css">
 
@@ -34,7 +35,6 @@
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
                 </form>
 
-
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -54,61 +54,65 @@
 
             <!-- Page Heading/Breadcrumbs -->
             <h1 class="mt-4 mb-3">
-                Spring eCommerce <small>Product</small>
+                Spring eCommerce <small>Shopping Cart</small>
             </h1>
 
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
-                <li class="breadcrumb-item active">Product</li>
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item active">Shopping Cart</li>
             </ol>
 
             <!-- Blog Post -->
             <div class="card mb-4">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-lg-6">
-                            <a href="#"> 
-                                <img class="img-fluid rounded" th:src="@{/images/{image} (image=${product.image})}">
-                            </a>
+                        <div class="col-lg-9">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Product</th>
+                                        <th scope="col">Price</th>
+                                        <th scope="col">Quantity</th>
+                                        <th scope="col">Total</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td >Name</td>
+                                        <td >Price</td>
+                                        <td>Quantity</td>
+                                        <td >Total</td>
+                                        <td><a href="#" class="btn btn-danger">Take Out</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
-                        <div class="col-lg-6">
-                            <form th:action="@{/cart}" method="POST">
-                                <h2 class="card-title" th:text="${product.name}"></h2>
 
-                                <ul class="list-group">
-                                    <li class="list-group-item"><h5 th:text="'Price: ' + ${product.price}"></h5></li>
-                                    <li class="list-group-item">
-                                        <p th:text="'Description: ' + ${product.description}"></p>
-                                    </li>
-                                    <li class="list-group-item">
-                                        <h6>
-                                            Quantity: <input type="number" id="quantity" name="quantity" autocomplete="off" min="1" max="5" value="1">
-                                        </h6>
-                                    </li>
-                                </ul>
+                        <div class="col-lg-3">
+                            <h2 class="card-title">SUBTOTAL</h2>
 
-                                <button type="submit" class="btn btn-dark">Add to shopping cart </button>
-
-                            </form>
+                            <ul class="list-group">
+                                <li class="list-group-item"><h5>Total: $ 10</h5></li>
+                                <a href="resumenorden.html" class="btn btn-dark">See Order</a>
+                            </ul>
                         </div>
+
                     </div>
                 </div>
             </div>
 
-        </div>
-        <!-- /.container -->
+            <!-- Footer -->
+            <div th:include="user/template.html::footer"></div>
+            <!--<footer class="py-5 bg-dark">
+                <div class="container">
+                    <p class="m-0 text-center text-white">Copyright &copy; Spring eCommerce 2020</p>
+                </div>
+            </footer>-->
 
-        <!-- Footer -->
-        <div th:include="user/template.html::footer"></div>
-        <!--<footer class="py-5 bg-dark">
-            <div class="container">
-                <p class="m-0 text-center text-white">Copyright &copy; Spring eCommerce 2020</p>
-            </div>
-        </footer>-->
-
-        <!-- Bootstrap core JavaScript -->
-        <script th:src="@{vendor/jquery/jquery.min.js}"></script>
-        <script th:src="@{vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+            <!-- Bootstrap core JavaScript -->
+            <script th:src="@{vendor/jquery/jquery.min.js}"></script>
+            <script th:src="@{vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
 
     </body>
 
