@@ -98,4 +98,12 @@ public class HomeController {
         model.addAttribute("order", order);
         return "user/cart";
     }
+    
+    @GetMapping("getCart")
+    public String getCart(Model model) {
+        model.addAttribute("details", details);
+        model.addAttribute("order", order);
+        return "user/cart";
+    }
+    
 }
