@@ -4,7 +4,12 @@
  */
 package com.ecommerce.controller;
 
+import com.ecommerce.model.Order;
+import com.ecommerce.model.OrderDetail;
+import com.ecommerce.model.Product;
 import com.ecommerce.service.ProductService;
+import java.util.ArrayList;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
@@ -27,6 +33,10 @@ public class HomeController {
     
     @Autowired
     private ProductService productService;
+    
+    private List<OrderDetail> details = new ArrayList<>();
+    
+    private Order order = new Order();
     
     @GetMapping("")
     public String home(Model model) {
@@ -42,7 +52,28 @@ public class HomeController {
     }
     
     @PostMapping("cart")
-    public String addCart() {
+    public String addCart(@RequestParam Integer id, @RequestParam Integer quantity, Model model) {
+        double total = 0;
+        
+        Product product = productService.get(id);
+        
+        OrderDetail orderDetail = new OrderDetail();
+        orderDetail.setName(product.getName());
+        orderDetail.setQuantity(quantity);
+        orderDetail.setPrice(product.getPrice());
+        orderDetail.setTotal(product.getPrice() * quantity);
+        orderDetail.setProduct(product);
+        details.add(orderDetail);
+        
+        total = details.stream().mapToDouble(dt -> dt.getTotal()).sum();
+        order.setTotal(total);
+        
+        model.addAttribute("details", details);
+        model.addAttribute("order", order);
+        
+        LOGGER.info("Product: {}", product);
+        LOGGER.info("Quantity: {}", quantity);
+        
         return "user/cart";
     }
 }
