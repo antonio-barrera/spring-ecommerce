@@ -10,6 +10,7 @@ import com.ecommerce.model.Product;
 import com.ecommerce.service.ProductService;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,35 +29,35 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping("/")
 public class HomeController {
-    
+
     private final Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
-    
+
     @Autowired
     private ProductService productService;
-    
+
     private List<OrderDetail> details = new ArrayList<>();
-    
+
     private Order order = new Order();
-    
+
     @GetMapping("")
     public String home(Model model) {
         model.addAttribute("products", productService.getAll());
         return "user/home";
     }
-    
+
     @GetMapping("product/{id}")
     public String product(@PathVariable Integer id, Model model) {
         model.addAttribute("product", productService.get(id));
         LOGGER.info("Product: {}", id);
         return "user/product";
     }
-    
+
     @PostMapping("cart")
     public String addCart(@RequestParam Integer id, @RequestParam Integer quantity, Model model) {
         double total = 0;
-        
+
         Product product = productService.get(id);
-        
+
         OrderDetail orderDetail = new OrderDetail();
         orderDetail.setName(product.getName());
         orderDetail.setQuantity(quantity);
@@ -64,16 +65,40 @@ public class HomeController {
         orderDetail.setTotal(product.getPrice() * quantity);
         orderDetail.setProduct(product);
         details.add(orderDetail);
+
+        total = details.stream().mapToDouble(dt -> dt.getTotal()).sum();
+        order.setTotal(total);
+
+        model.addAttribute("details", details);
+        model.addAttribute("order", order);
+
+        LOGGER.info("Product: {}", product);
+        LOGGER.info("Quantity: {}", quantity);
+
+        return "user/cart";
+    }
+
+    @GetMapping("cart/{id}/delete")
+    public String takeOutProduct(@PathVariable Integer id, Model model) {
+
+        List<OrderDetail> newOrders = new ArrayList<>();
+
+        double total = 0.0;
+
+        for (OrderDetail detail : details) {
+            if (!Objects.equals(detail.getProduct().getId(), id)) {
+                newOrders.add(detail);
+            }
+        }
+
+        details = newOrders;
         
         total = details.stream().mapToDouble(dt -> dt.getTotal()).sum();
         order.setTotal(total);
-        
+
         model.addAttribute("details", details);
         model.addAttribute("order", order);
-        
-        LOGGER.info("Product: {}", product);
-        LOGGER.info("Quantity: {}", quantity);
-        
+
         return "user/cart";
     }
 }
