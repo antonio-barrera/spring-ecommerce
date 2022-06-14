@@ -4,18 +4,13 @@
  */
 package com.ecommerce.service;
 
-import com.ecommerce.model.Product;
-import java.util.List;
+import com.ecommerce.model.User;
 
 /**
  *
  * @author jeant
  */
-public interface ProductService {
+public interface IUserService {
     
-    Product save(Product product);
-    Product get(Integer id);
-    List<Product> getAll();
-    void update(Product product);
-    void delete(Integer id);
+    User get(Integer id);
 }

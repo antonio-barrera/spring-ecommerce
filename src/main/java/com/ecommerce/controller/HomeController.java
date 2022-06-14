@@ -7,7 +7,6 @@ package com.ecommerce.controller;
 import com.ecommerce.model.Order;
 import com.ecommerce.model.OrderDetail;
 import com.ecommerce.model.Product;
-import com.ecommerce.service.ProductService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -21,6 +20,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import com.ecommerce.service.IProductService;
+import com.ecommerce.service.IUserService;
 
 /**
  *
@@ -33,7 +34,10 @@ public class HomeController {
     private final Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
 
     @Autowired
-    private ProductService productService;
+    private IProductService productService;
+    
+    @Autowired
+    private IUserService userService;
 
     private List<OrderDetail> details = new ArrayList<>();
 
@@ -104,6 +108,14 @@ public class HomeController {
         model.addAttribute("details", details);
         model.addAttribute("order", order);
         return "user/cart";
+    }
+    
+    @GetMapping("order")
+    public String order(Model model) {
+        model.addAttribute("user", userService.get(1));
+        model.addAttribute("details", details);
+        model.addAttribute("order", order);
+        return "user/order";
     }
     
 }
