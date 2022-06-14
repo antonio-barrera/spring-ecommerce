@@ -55,50 +55,47 @@ public class HomeController {
     @PostMapping("cart")
     public String addCart(@RequestParam Integer id, @RequestParam Integer quantity, Model model) {
         double total = 0;
-
-        Product product = productService.get(id);
-
+        Product product = productService.get(id);        
         OrderDetail orderDetail = new OrderDetail();
         orderDetail.setName(product.getName());
         orderDetail.setQuantity(quantity);
         orderDetail.setPrice(product.getPrice());
         orderDetail.setTotal(product.getPrice() * quantity);
         orderDetail.setProduct(product);
-        details.add(orderDetail);
-
+        boolean isAdded = false;
+        for (OrderDetail detail : details) {
+            if (Objects.equals(product.getId(), detail.getProduct().getId())) {
+                isAdded = true;
+                quantity += (int) detail.getQuantity();
+                detail.setQuantity(quantity);
+                detail.setTotal(product.getPrice() * quantity);
+                break;
+            }
+        }
+        if (!isAdded) {
+            details.add(orderDetail);
+        }
         total = details.stream().mapToDouble(dt -> dt.getTotal()).sum();
         order.setTotal(total);
-
         model.addAttribute("details", details);
         model.addAttribute("order", order);
-
-        LOGGER.info("Product: {}", product);
-        LOGGER.info("Quantity: {}", quantity);
-
         return "user/cart";
     }
 
     @GetMapping("cart/{id}/delete")
     public String takeOutProduct(@PathVariable Integer id, Model model) {
-
         List<OrderDetail> newOrders = new ArrayList<>();
-
         double total = 0.0;
-
         for (OrderDetail detail : details) {
             if (!Objects.equals(detail.getProduct().getId(), id)) {
                 newOrders.add(detail);
             }
         }
-
         details = newOrders;
-        
         total = details.stream().mapToDouble(dt -> dt.getTotal()).sum();
         order.setTotal(total);
-
         model.addAttribute("details", details);
         model.addAttribute("order", order);
-
         return "user/cart";
     }
 }
