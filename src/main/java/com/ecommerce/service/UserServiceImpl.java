@@ -6,9 +6,9 @@ package com.ecommerce.service;
 
 import com.ecommerce.exception.UserNotFoundException;
 import com.ecommerce.model.User;
-import com.ecommerce.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.ecommerce.repository.IUserRepository;
 
 /**
  *
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements IUserService {
     
     @Autowired
-    private UserRepository userRepository;
+    private IUserRepository userRepository;
 
     @Override
     public User get(Integer id) {

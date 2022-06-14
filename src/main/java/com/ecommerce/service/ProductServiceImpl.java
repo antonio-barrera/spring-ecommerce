@@ -6,10 +6,10 @@ package com.ecommerce.service;
 
 import com.ecommerce.exception.ProductNotFoundException;
 import com.ecommerce.model.Product;
-import com.ecommerce.repository.ProductRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.ecommerce.repository.IProductRepository;
 
 /**
  *
@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 public class ProductServiceImpl implements IProductService {
     
     @Autowired
-    private ProductRepository productRepository;
+    private IProductRepository productRepository;
     
     @Override
     public Product save(Product product) {
