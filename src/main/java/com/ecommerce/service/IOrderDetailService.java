@@ -12,5 +12,5 @@ import com.ecommerce.model.OrderDetail;
  */
 public interface IOrderDetailService {
     
-    OrderDetail get(OrderDetail orderDetail);
+    OrderDetail save(OrderDetail orderDetail);
 }

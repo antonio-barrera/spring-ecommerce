@@ -7,6 +7,8 @@ package com.ecommerce.controller;
 import com.ecommerce.model.Order;
 import com.ecommerce.model.OrderDetail;
 import com.ecommerce.model.Product;
+import com.ecommerce.service.IOrderDetailService;
+import com.ecommerce.service.IOrderService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.ecommerce.service.IProductService;
 import com.ecommerce.service.IUserService;
+import java.util.Date;
 
 /**
  *
@@ -38,6 +41,12 @@ public class HomeController {
     
     @Autowired
     private IUserService userService;
+    
+    @Autowired
+    private IOrderService orderService;
+    
+    @Autowired
+    private IOrderDetailService orderDetailService;
 
     private List<OrderDetail> details = new ArrayList<>();
 
@@ -116,6 +125,23 @@ public class HomeController {
         model.addAttribute("details", details);
         model.addAttribute("order", order);
         return "user/order";
+    }
+    
+    @GetMapping("saveOrder")
+    public String saveOrder() {
+        order.setCreationDate(new Date());
+        order.setUser(userService.get(1));
+        orderService.save(order);
+        
+        for (OrderDetail detail : details) {
+            detail.setOrder(order);
+            orderDetailService.save(detail);
+        }
+        
+        details.clear();
+        order = new Order();
+        
+        return "redirect:/";
     }
     
 }
