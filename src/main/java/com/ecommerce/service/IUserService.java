@@ -13,4 +13,5 @@ import com.ecommerce.model.User;
 public interface IUserService {
     
     User get(Integer id);
+    User save(User user);
 }
