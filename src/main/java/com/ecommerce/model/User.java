@@ -28,7 +28,7 @@ public class User {
     private String email;
     private String address;
     private String phone;
-    private String type;
+    private UserType type;
     private String password;
     
     @OneToMany(mappedBy = "user")
@@ -40,7 +40,7 @@ public class User {
     public User() {
     }
 
-    public User(Integer id, String name, String username, String email, String address, String phone, String type, String password) {
+    public User(Integer id, String name, String username, String email, String address, String phone, UserType type, String password) {
         this.id = id;
         this.name = name;
         this.username = username;
@@ -99,11 +99,11 @@ public class User {
         this.phone = phone;
     }
 
-    public String getType() {
+    public UserType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(UserType type) {
         this.type = type;
     }
 

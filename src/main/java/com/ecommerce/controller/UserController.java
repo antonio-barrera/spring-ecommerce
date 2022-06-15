@@ -36,7 +36,7 @@ public class UserController {
     @PostMapping("/save")
     public String save(User user) {
         LOGGER.info("User: {}", user);
-        user.setType("USER");
+        user.setType(UserType.USER);
         userService.save(user);
         return "redirect:/";
     }

@@ -6,6 +6,7 @@ package com.ecommerce.controller;
 
 import com.ecommerce.model.Product;
 import com.ecommerce.model.User;
+import com.ecommerce.model.UserType;
 import com.ecommerce.service.FileService;
 import java.io.IOException;
 import org.slf4j.Logger;
@@ -50,7 +51,7 @@ public class ProductController {
 
     @PostMapping("/save")
     public String save(Product product, @RequestParam("img") MultipartFile file) throws IOException {
-        User user = new User(1, "", "", "", "", "", "", "");
+        User user = new User(1, "", "", "", "", "", UserType.ADMIN, "");
         product.setUser(user);
 
         if (product.getId() == null) {
