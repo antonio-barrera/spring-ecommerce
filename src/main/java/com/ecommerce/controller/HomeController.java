@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.ecommerce.service.IProductService;
 import com.ecommerce.service.IUserService;
 import java.util.Date;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -142,6 +143,17 @@ public class HomeController {
         order = new Order();
         
         return "redirect:/";
+    }
+    
+    @GetMapping("searchProduct")
+    public String searchProduct(@RequestParam String name, Model model) {
+        LOGGER.info("Product name: {}", name);
+        List<Product> products = productService.getAll()
+                .stream()
+                .filter(product -> product.getName().toLowerCase().contains(name.toLowerCase()))
+                .collect(Collectors.toList());
+        model.addAttribute("products", products);
+        return "user/home";
     }
     
 }
