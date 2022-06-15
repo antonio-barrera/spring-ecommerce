@@ -5,7 +5,6 @@
 package com.ecommerce.controller;
 
 import com.ecommerce.model.User;
-import com.ecommerce.model.UserType;
 import com.ecommerce.service.IUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,7 +35,7 @@ public class UserController {
     @PostMapping("/save")
     public String save(User user) {
         LOGGER.info("User: {}", user);
-        user.setType(UserType.USER);
+        user.setType("USER");
         userService.save(user);
         return "redirect:/";
     }
