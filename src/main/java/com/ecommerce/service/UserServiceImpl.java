@@ -9,6 +9,7 @@ import com.ecommerce.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ecommerce.repository.IUserRepository;
+import java.util.Optional;
 
 /**
  *
@@ -24,6 +25,11 @@ public class UserServiceImpl implements IUserService {
     public User get(Integer id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException(id));
+    }
+    
+    @Override
+    public Optional<User> getByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 
     @Override

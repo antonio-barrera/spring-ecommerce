@@ -6,6 +6,8 @@ package com.ecommerce.controller;
 
 import com.ecommerce.model.User;
 import com.ecommerce.service.IUserService;
+import java.util.Optional;
+import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,22 +23,45 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/user")
 public class UserController {
-    
+
     private final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
-    
+
     @Autowired
     private IUserService userService;
-    
+
     @GetMapping("/register")
     public String register() {
         return "user/register";
     }
-    
+
     @PostMapping("/save")
     public String save(User user) {
         LOGGER.info("User: {}", user);
         user.setType("USER");
         userService.save(user);
+        return "redirect:/";
+    }
+
+    @GetMapping("/login")
+    public String login() {
+        return "user/login";
+    }
+
+    @PostMapping("/access")
+    public String access(User user, HttpSession session) {
+        LOGGER.info("Accessing: {}", user);
+        Optional<User> foundUser = userService.getByEmail(user.getEmail());
+        
+        if (foundUser.isPresent()) {
+            LOGGER.info("Found User: {}", foundUser.get());
+            session.setAttribute("userId", user.getId());
+            if (foundUser.get().getType().equals("ADMIN")) {
+                return "redirect:/admin";
+            }
+        }
+
+        LOGGER.info("Could not find user: {} ", user.getEmail());
+
         return "redirect:/";
     }
 }
