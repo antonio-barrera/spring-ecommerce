@@ -26,6 +26,7 @@ import com.ecommerce.service.IProductService;
 import com.ecommerce.service.IUserService;
 import java.util.Date;
 import java.util.stream.Collectors;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -54,7 +55,8 @@ public class HomeController {
     private Order order = new Order();
 
     @GetMapping("")
-    public String home(Model model) {
+    public String home(Model model, HttpSession session) {
+        LOGGER.info("Session: {}", session.getAttribute("userId"));
         model.addAttribute("products", productService.getAll());
         return "user/home";
     }
@@ -121,17 +123,17 @@ public class HomeController {
     }
     
     @GetMapping("order")
-    public String order(Model model) {
-        model.addAttribute("user", userService.get(1));
+    public String order(Model model, HttpSession session) {
+        model.addAttribute("user", userService.get(Integer.parseInt(session.getAttribute("userId").toString())));
         model.addAttribute("details", details);
         model.addAttribute("order", order);
         return "user/order";
     }
     
     @GetMapping("saveOrder")
-    public String saveOrder() {
+    public String saveOrder(HttpSession session) {
         order.setCreationDate(new Date());
-        order.setUser(userService.get(1));
+        order.setUser(userService.get(Integer.parseInt(session.getAttribute("userId").toString())));
         orderService.save(order);
         
         for (OrderDetail detail : details) {

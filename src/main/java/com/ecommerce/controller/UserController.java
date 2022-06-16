@@ -49,15 +49,13 @@ public class UserController {
 
     @PostMapping("/access")
     public String access(User user, HttpSession session) {
-        LOGGER.info("Accessing: {}", user);
         Optional<User> foundUser = userService.getByEmail(user.getEmail());
-        
         if (foundUser.isPresent()) {
-            LOGGER.info("Found User: {}", foundUser.get());
-            session.setAttribute("userId", user.getId());
+            session.setAttribute("userId", foundUser.get().getId());
             if (foundUser.get().getType().equals("ADMIN")) {
                 return "redirect:/admin";
             }
+            return "redirect:/";
         }
 
         LOGGER.info("Could not find user: {} ", user.getEmail());

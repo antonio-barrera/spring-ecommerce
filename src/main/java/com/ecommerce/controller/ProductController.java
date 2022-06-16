@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import com.ecommerce.service.IProductService;
+import com.ecommerce.service.IUserService;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -33,6 +35,9 @@ public class ProductController {
 
     @Autowired
     private IProductService productService;
+    
+    @Autowired
+    private IUserService userService;
 
     @Autowired
     private FileService fileService;
@@ -49,8 +54,8 @@ public class ProductController {
     }
 
     @PostMapping("/save")
-    public String save(Product product, @RequestParam("img") MultipartFile file) throws IOException {
-        User user = new User(1, "", "", "", "", "", "", "");
+    public String save(Product product, @RequestParam("img") MultipartFile file, HttpSession session) throws IOException {
+        User user = userService.get(Integer.parseInt(session.getAttribute("userId").toString()));
         product.setUser(user);
 
         if (product.getId() == null) {
