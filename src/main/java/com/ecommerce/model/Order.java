@@ -5,12 +5,13 @@
 package com.ecommerce.model;
 
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -32,20 +33,19 @@ public class Order {
     @ManyToOne
     private User user;
     
-    @OneToOne(mappedBy = "order")
-    private OrderDetail detail;
+    @OneToMany(mappedBy = "order")
+    private List<OrderDetail> details;
 
     public Order() {
     }
 
-    public Order(Integer id, String number, Date creationDate, Date receivedDate, double total, User user, OrderDetail detail) {
+    public Order(Integer id, String number, Date creationDate, Date receivedDate, double total, User user) {
         this.id = id;
         this.number = number;
         this.creationDate = creationDate;
         this.receivedDate = receivedDate;
         this.total = total;
         this.user = user;
-        this.detail = detail;
     }
 
     public Integer getId() {
@@ -96,14 +96,14 @@ public class Order {
         this.user = user;
     }
 
-    public OrderDetail getDetail() {
-        return detail;
+    public List<OrderDetail> getDetails() {
+        return details;
     }
 
-    public void setDetail(OrderDetail detail) {
-        this.detail = detail;
+    public void setDetails(List<OrderDetail> details) {
+        this.details = details;
     }
-
+    
     @Override
     public String toString() {
         return "Order{" + "id=" + id + ", number=" + number + ", creationDate=" + creationDate + ", receivedDate=" + receivedDate + ", total=" + total + '}';

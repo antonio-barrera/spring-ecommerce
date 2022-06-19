@@ -4,14 +4,18 @@
  */
 package com.ecommerce.controller;
 
+import com.ecommerce.model.Order;
 import com.ecommerce.model.User;
+import com.ecommerce.service.IOrderService;
 import com.ecommerce.service.IUserService;
+import java.util.List;
 import java.util.Optional;
 import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +32,9 @@ public class UserController {
 
     @Autowired
     private IUserService userService;
+    
+    @Autowired
+    private IOrderService orderService;
 
     @GetMapping("/register")
     public String register() {
@@ -61,5 +68,14 @@ public class UserController {
         LOGGER.info("Could not find user: {} ", user.getEmail());
 
         return "redirect:/";
+    }
+    
+    @GetMapping("/purchases")
+    public String getPurchases(Model model, HttpSession session) {
+        User user = userService.get(Integer.parseInt(session.getAttribute("userId").toString()));
+        List<Order> orders = orderService.getByUser(user);
+        model.addAttribute("userSession", session.getAttribute("userId"));
+        model.addAttribute("orders", orders);
+        return "user/purchases";
     }
 }

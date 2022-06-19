@@ -5,6 +5,7 @@
 package com.ecommerce.service;
 
 import com.ecommerce.model.Order;
+import com.ecommerce.model.User;
 import java.util.List;
 
 /**
@@ -15,4 +16,5 @@ public interface IOrderService {
     
     Order save(Order order);
     List<Order> getAll();
+    List<Order> getByUser(User user);
 }

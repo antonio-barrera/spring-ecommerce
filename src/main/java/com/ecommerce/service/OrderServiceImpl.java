@@ -5,6 +5,7 @@
 package com.ecommerce.service;
 
 import com.ecommerce.model.Order;
+import com.ecommerce.model.User;
 import com.ecommerce.repository.IOrderRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,5 +29,10 @@ public class OrderServiceImpl implements IOrderService {
     @Override
     public List<Order> getAll() {
         return orderRepository.findAll();
+    }
+    
+    @Override
+    public List<Order> getByUser(User user) {
+        return orderRepository.findByUser(user);
     }
 }
