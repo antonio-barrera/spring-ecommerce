@@ -4,6 +4,7 @@
  */
 package com.ecommerce.service;
 
+import com.ecommerce.exception.OrderNotFoundException;
 import com.ecommerce.model.Order;
 import com.ecommerce.model.User;
 import com.ecommerce.repository.IOrderRepository;
@@ -24,6 +25,12 @@ public class OrderServiceImpl implements IOrderService {
     @Override
     public Order save(Order order) {
         return orderRepository.save(order);
+    }
+    
+    @Override
+    public Order get(Integer id) {
+        return orderRepository.findById(id)
+                .orElseThrow(() -> new OrderNotFoundException(id));
     }
 
     @Override

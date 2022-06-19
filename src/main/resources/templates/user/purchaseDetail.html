@@ -29,12 +29,13 @@
 
             <!-- Page Heading/Breadcrumbs -->
             <h1 class="mt-4 mb-3">
-                Spring eCommerce <small>Purchases</small>
+                Spring eCommerce <small>Details</small>
             </h1>
 
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
-                <li class="breadcrumb-item active">Purchases</li>
+                <li class="breadcrumb-item"><a th:href="@{/user/purchases}">Purchases</a></li>
+                <li class="breadcrumb-item active">Purchase Detail</li>
             </ol>
 
             <!-- Blog Post -->
@@ -45,18 +46,18 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th scope="col">Order Number</th>
-                                        <th scope="col">Date</th>
-                                        <th scope="col">Value</th>
-                                        <th scope="col">Action</th>
+                                        <th scope="col">Quantity</th>
+                                        <th scope="col">Product</th>                  
+                                        <th scope="col">Price</th>
+                                        <th scope="col">Total</th>                  
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr th:each="order:${orders}">
-                                        <td th:text="${order.number}"></td>
-                                        <td th:text="${order.creationDate}"></td>
-                                        <td th:text="${order.total}"></td>
-                                        <td><a th:href="@{/user/purchaseDetail/{id} (id=${order.id})}" class="btn btn-success">See Detail</a></td>
+                                    <tr th:each="detail:${details}">
+                                        <td th:text="${detail.quantity}"></td>
+                                        <td th:text="${detail.name}"></td>
+                                        <td th:text="${detail.price}"></td>
+                                        <td th:text="${detail.total}"></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -65,6 +66,7 @@
                 </div>
             </div>
         </div>
+        <!-- /.container -->
 
         <!-- Footer -->
         <div th:include="user/template.html::footer"></div>
@@ -76,3 +78,4 @@
     </body>
 
 </html>
+

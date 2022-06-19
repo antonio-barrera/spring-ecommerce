@@ -15,6 +15,7 @@ import java.util.List;
 public interface IOrderService {
     
     Order save(Order order);
+    Order get(Integer id);
     List<Order> getAll();
     List<Order> getByUser(User user);
 }
