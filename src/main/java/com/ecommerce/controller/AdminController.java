@@ -48,4 +48,10 @@ public class AdminController {
         model.addAttribute("orders", orderService.getAll());
         return "admin/orders";
     }
+    
+    @GetMapping("/detail/{id}")
+    public String detail(Model model, @PathVariable Integer id) {
+        model.addAttribute("details", orderService.get(id).getDetails());
+        return "admin/orderDetail";
+    }
 }

@@ -21,19 +21,21 @@
     <body>
 
         <!-- Navigation -->
-        <div th:include="admin/template.html::header"></div>
+        <div th:if="${userSession==null}" th:include="user/template.html::header"></div>
+        <div th:unless="${userSession==null}" th:include="user/template.html::header-user"></div>
 
         <!-- Page Content -->
         <div class="container">
 
             <!-- Page Heading/Breadcrumbs -->
             <h1 class="mt-4 mb-3">
-                Spring eCommerce <small>Orders</small>
+                Spring eCommerce <small>Details</small>
             </h1>
 
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
-                <li class="breadcrumb-item active">Orders</li>
+                <li class="breadcrumb-item"><a th:href="@{/user/purchases}">Orders</a></li>
+                <li class="breadcrumb-item active">Order Details</li>
             </ol>
 
             <!-- Blog Post -->
@@ -44,18 +46,18 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th scope="col">Order Number</th>
-                                        <th scope="col">Date</th>
-                                        <th scope="col">Value</th>
-                                        <th scope="col">Action</th>
+                                        <th scope="col">Quantity</th>
+                                        <th scope="col">Product</th>                  
+                                        <th scope="col">Price</th>
+                                        <th scope="col">Total</th>                  
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr th:each="order:${orders}">
-                                        <td th:text="${order.number}"></td>
-                                        <td th:text="${order.creationDate}"></td>
-                                        <td th:text="${order.total}"></td>
-                                        <td><a th:href="@{/admin/detail/{id} (id=${order.id})}" class="btn btn-success">See Detail</a></td>
+                                    <tr th:each="detail:${details}">
+                                        <td th:text="${detail.quantity}"></td>
+                                        <td th:text="${detail.name}"></td>
+                                        <td th:text="${detail.price}"></td>
+                                        <td th:text="${detail.total}"></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -67,7 +69,7 @@
         <!-- /.container -->
 
         <!-- Footer -->
-        <div th:include="admin/template.html::footer"></div>
+        <div th:include="user/template.html::footer"></div>
 
         <!-- Bootstrap core JavaScript -->
         <script th:src="@{vendor/jquery/jquery.min.js}"></script>
@@ -76,3 +78,4 @@
     </body>
 
 </html>
+
