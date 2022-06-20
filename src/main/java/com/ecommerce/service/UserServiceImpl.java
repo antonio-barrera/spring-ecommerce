@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ecommerce.repository.IUserRepository;
 import java.util.Optional;
+import java.util.List;
 
 /**
  *
@@ -25,6 +26,11 @@ public class UserServiceImpl implements IUserService {
     public User get(Integer id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException(id));
+    }
+    
+    @Override
+    public List<User> getAll() {
+        return userRepository.findAll();
     }
     
     @Override

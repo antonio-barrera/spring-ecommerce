@@ -6,6 +6,7 @@ package com.ecommerce.service;
 
 import com.ecommerce.model.User;
 import java.util.Optional;
+import java.util.List;
 
 /**
  *
@@ -14,6 +15,7 @@ import java.util.Optional;
 public interface IUserService {
     
     User get(Integer id);
+    List<User> getAll();
     Optional<User> getByEmail(String email);
     User save(User user);
 }

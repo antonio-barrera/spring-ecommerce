@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.ecommerce.service.IProductService;
+import com.ecommerce.service.IUserService;
 
 /**
  *
@@ -21,10 +22,19 @@ public class AdminController {
     
     @Autowired
     private IProductService productService;
+    
+    @Autowired
+    private IUserService userService;
 
     @GetMapping("")
     public String home(Model model) {
         model.addAttribute("products", productService.getAll());
         return "admin/home";
+    }
+    
+    @GetMapping("/users")
+    public String users(Model model) {
+        model.addAttribute("users", userService.getAll());
+        return "admin/users";
     }
 }
