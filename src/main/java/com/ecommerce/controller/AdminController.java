@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.ecommerce.service.IProductService;
 import com.ecommerce.service.IUserService;
+import com.ecommerce.service.IOrderService;
 
 /**
  *
@@ -25,6 +27,9 @@ public class AdminController {
     
     @Autowired
     private IUserService userService;
+    
+    @Autowired
+    private IOrderService orderService;
 
     @GetMapping("")
     public String home(Model model) {
@@ -36,5 +41,11 @@ public class AdminController {
     public String users(Model model) {
         model.addAttribute("users", userService.getAll());
         return "admin/users";
+    }
+    
+    @GetMapping("/orders")
+    public String orders(Model model) {
+        model.addAttribute("orders", orderService.getAll());
+        return "admin/orders";
     }
 }
