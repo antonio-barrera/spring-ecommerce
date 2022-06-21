@@ -62,9 +62,7 @@ public class ProductController {
             String imageName = fileService.saveImage(file);
             product.setImage(imageName);
         }
-
         productService.save(product);
-        LOGGER.info("This is the product {}", product);
         return "redirect:/product";
     }
 
@@ -94,11 +92,9 @@ public class ProductController {
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Integer id) {
         Product product = productService.get(id);
-        
         if (!product.getImage().equals("default.jpg")) {
             fileService.deleteImage(product.getImage());
         }
-
         productService.delete(id);
         return "redirect:/product";
     }

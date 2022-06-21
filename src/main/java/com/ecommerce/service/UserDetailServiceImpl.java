@@ -41,7 +41,6 @@ public class UserDetailServiceImpl implements UserDetailsService {
                     .roles(user.get().getType())
                     .build();
         }
-        LOGGER.info("{} is not present.", username);
         throw new UsernameNotFoundException("Could not find user " + username);
     }
     

@@ -44,7 +44,6 @@ public class UserController {
 
     @PostMapping("/save")
     public String save(User user) {
-        LOGGER.info("User: {}", user);
         user.setType("USER");
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
         userService.save(user);
@@ -77,7 +76,6 @@ public class UserController {
 
     @GetMapping("/purchaseDetail/{id}")
     public String purchaseDetail(@PathVariable Integer id, HttpSession session, Model model) {
-        LOGGER.info("Order Id: {}", id);
         model.addAttribute("details", orderService.get(id).getDetails());
         model.addAttribute("userSession", session.getAttribute("userId"));
         return "user/purchaseDetail";

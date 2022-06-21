@@ -56,7 +56,6 @@ public class HomeController {
 
     @GetMapping("")
     public String home(Model model, HttpSession session) {
-        LOGGER.info("Session: {}", session.getAttribute("userId"));
         model.addAttribute("products", productService.getAll());
         model.addAttribute("userSession", session.getAttribute("userId"));
         return "user/home";
@@ -65,7 +64,6 @@ public class HomeController {
     @GetMapping("product/{id}")
     public String product(@PathVariable Integer id, Model model) {
         model.addAttribute("product", productService.get(id));
-        LOGGER.info("Product: {}", id);
         return "user/product";
     }
 
@@ -151,7 +149,6 @@ public class HomeController {
     
     @GetMapping("searchProduct")
     public String searchProduct(@RequestParam String name, Model model) {
-        LOGGER.info("Product name: {}", name);
         List<Product> products = productService.getAll()
                 .stream()
                 .filter(product -> product.getName().toLowerCase().contains(name.toLowerCase()))
