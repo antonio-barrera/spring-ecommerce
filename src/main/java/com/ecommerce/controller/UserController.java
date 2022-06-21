@@ -9,11 +9,11 @@ import com.ecommerce.model.User;
 import com.ecommerce.service.IOrderService;
 import com.ecommerce.service.IUserService;
 import java.util.List;
-import java.util.Optional;
 import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,7 +33,7 @@ public class UserController {
 
     @Autowired
     private IUserService userService;
-    
+
     @Autowired
     private IOrderService orderService;
 
@@ -46,6 +46,7 @@ public class UserController {
     public String save(User user) {
         LOGGER.info("User: {}", user);
         user.setType("USER");
+        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
         userService.save(user);
         return "redirect:/";
     }
@@ -55,22 +56,16 @@ public class UserController {
         return "user/login";
     }
 
-    @PostMapping("/access")
-    public String access(User user, HttpSession session) {
-        Optional<User> foundUser = userService.getByEmail(user.getEmail());
-        if (foundUser.isPresent()) {
-            session.setAttribute("userId", foundUser.get().getId());
-            if (foundUser.get().getType().equals("ADMIN")) {
-                return "redirect:/admin";
-            }
-            return "redirect:/";
+    @GetMapping("/access")
+    public String access(HttpSession session) {
+        User user = userService.get(Integer.parseInt(session.getAttribute("userId").toString()));
+//        session.setAttribute("userId", user.getId());
+        if (user.getType().equals("ADMIN")) {
+            return "redirect:/admin";
         }
-
-        LOGGER.info("Could not find user: {} ", user.getEmail());
-
         return "redirect:/";
     }
-    
+
     @GetMapping("/purchases")
     public String getPurchases(Model model, HttpSession session) {
         User user = userService.get(Integer.parseInt(session.getAttribute("userId").toString()));
@@ -79,7 +74,7 @@ public class UserController {
         model.addAttribute("orders", orders);
         return "user/purchases";
     }
-    
+
     @GetMapping("/purchaseDetail/{id}")
     public String purchaseDetail(@PathVariable Integer id, HttpSession session, Model model) {
         LOGGER.info("Order Id: {}", id);
@@ -87,7 +82,7 @@ public class UserController {
         model.addAttribute("userSession", session.getAttribute("userId"));
         return "user/purchaseDetail";
     }
-    
+
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.removeAttribute("userId");
