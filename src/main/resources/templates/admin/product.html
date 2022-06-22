@@ -28,36 +28,37 @@
 
             <!-- Page Heading/Breadcrumbs -->
             <h1 class="mt-4 mb-3">
-                Spring eCommerce <small>Users</small>
+                Spring eCommerce <small>Product</small>
             </h1>
 
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a th:href="@{/admin}">Home</a></li>
-                <li class="breadcrumb-item active">See Users</li>
+                <li class="breadcrumb-item active">Product</li>
             </ol>
-            <h2>Users</h2>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">Name</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Address</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="user:${users}">
-                        <td th:text="${user.name}"></td>
-                        <td th:text="${user.email}"></td>
-                        <td th:text="${user.address}"></td>
-                    </tr>       
-                </tbody>
-            </table>
+
+            <!-- Blog Post -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <a href="#"> 
+                                <img class="img-fluid rounded" th:src="@{/images/{image} (image=${product.image})}">
+                            </a>
+                        </div>
+                        <div class="col-lg-6">
+                            <h2 class="card-title" th:text="${product.name}"></h2>
+                            <h5 th:text="'Price: ' + ${product.price}"></h5>
+                            <p th:text="'Description: ' + ${product.description}"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         </div>
         <!-- /.container -->
 
         <!-- Footer -->
-        <div th:include="admin/template.html::footer"></div>
+        <div th:include="user/template.html::footer"></div>
 
         <!-- Bootstrap core JavaScript -->
         <script th:src="@{vendor/jquery/jquery.min.js}"></script>

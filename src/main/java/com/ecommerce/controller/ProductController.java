@@ -28,7 +28,7 @@ import javax.servlet.http.HttpSession;
  * @author jeant
  */
 @Controller
-@RequestMapping("/product")
+@RequestMapping("/admin/product")
 public class ProductController {
 
     private final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
@@ -97,6 +97,12 @@ public class ProductController {
         }
         productService.delete(id);
         return "redirect:/product";
+    }
+    
+    @GetMapping("/{id}")
+    public String product(@PathVariable Integer id, Model model) {
+        model.addAttribute("product", productService.get(id));
+        return "admin/product";
     }
 
 }
