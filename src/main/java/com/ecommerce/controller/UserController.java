@@ -58,7 +58,6 @@ public class UserController {
     @GetMapping("/access")
     public String access(HttpSession session) {
         User user = userService.get(Integer.parseInt(session.getAttribute("userId").toString()));
-//        session.setAttribute("userId", user.getId());
         if (user.getType().equals("ADMIN")) {
             return "redirect:/admin";
         }

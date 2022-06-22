@@ -40,13 +40,13 @@ public class HomeController {
 
     @Autowired
     private IProductService productService;
-    
+
     @Autowired
     private IUserService userService;
-    
+
     @Autowired
     private IOrderService orderService;
-    
+
     @Autowired
     private IOrderDetailService orderDetailService;
 
@@ -62,15 +62,16 @@ public class HomeController {
     }
 
     @GetMapping("product/{id}")
-    public String product(@PathVariable Integer id, Model model) {
+    public String product(@PathVariable Integer id, Model model, HttpSession session) {
         model.addAttribute("product", productService.get(id));
+        model.addAttribute("userSession", session.getAttribute("userId"));
         return "user/product";
     }
 
     @PostMapping("cart")
-    public String addCart(@RequestParam Integer id, @RequestParam Integer quantity, Model model) {
+    public String addCart(@RequestParam Integer id, @RequestParam Integer quantity, Model model, HttpSession session) {
         double total = 0;
-        Product product = productService.get(id);        
+        Product product = productService.get(id);
         OrderDetail orderDetail = new OrderDetail();
         orderDetail.setName(product.getName());
         orderDetail.setQuantity(quantity);
@@ -94,11 +95,12 @@ public class HomeController {
         order.setTotal(total);
         model.addAttribute("details", details);
         model.addAttribute("order", order);
+        model.addAttribute("userSession", session.getAttribute("userId"));
         return "user/cart";
     }
 
     @GetMapping("cart/{id}/delete")
-    public String takeOutProduct(@PathVariable Integer id, Model model) {
+    public String takeOutProduct(@PathVariable Integer id, Model model, HttpSession session) {
         List<OrderDetail> newOrders = new ArrayList<>();
         double total = 0.0;
         for (OrderDetail detail : details) {
@@ -111,9 +113,10 @@ public class HomeController {
         order.setTotal(total);
         model.addAttribute("details", details);
         model.addAttribute("order", order);
+        model.addAttribute("userSession", session.getAttribute("userId"));
         return "user/cart";
     }
-    
+
     @GetMapping("getCart")
     public String getCart(Model model, HttpSession session) {
         model.addAttribute("details", details);
@@ -121,40 +124,39 @@ public class HomeController {
         model.addAttribute("userSession", session.getAttribute("userId"));
         return "user/cart";
     }
-    
+
     @GetMapping("order")
     public String order(Model model, HttpSession session) {
         model.addAttribute("user", userService.get(Integer.parseInt(session.getAttribute("userId").toString())));
         model.addAttribute("details", details);
         model.addAttribute("order", order);
+        model.addAttribute("userSession", session.getAttribute("userId"));
         return "user/order";
     }
-    
+
     @GetMapping("saveOrder")
     public String saveOrder(HttpSession session) {
         order.setCreationDate(new Date());
         order.setUser(userService.get(Integer.parseInt(session.getAttribute("userId").toString())));
         orderService.save(order);
-        
         for (OrderDetail detail : details) {
             detail.setOrder(order);
             orderDetailService.save(detail);
         }
-        
         details.clear();
         order = new Order();
-        
         return "redirect:/";
     }
-    
+
     @GetMapping("searchProduct")
-    public String searchProduct(@RequestParam String name, Model model) {
+    public String searchProduct(@RequestParam String name, Model model, HttpSession session) {
         List<Product> products = productService.getAll()
                 .stream()
                 .filter(product -> product.getName().toLowerCase().contains(name.toLowerCase()))
                 .collect(Collectors.toList());
         model.addAttribute("products", products);
+        model.addAttribute("userSession", session.getAttribute("userId"));
         return "user/home";
     }
-    
+
 }
