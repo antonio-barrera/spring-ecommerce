@@ -21,8 +21,7 @@
     <body>
 
         <!-- Navigation -->
-        <div th:if="${userSession==null}" th:include="user/template.html::header"></div>
-        <div th:unless="${userSession==null}" th:include="user/template.html::header-user"></div>
+        <div th:include="admin/template.html::header"></div>
 
         <!-- Page Content -->
         <div class="container">
