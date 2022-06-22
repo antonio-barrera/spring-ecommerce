@@ -28,7 +28,7 @@ import javax.servlet.http.HttpSession;
  * @author jeant
  */
 @Controller
-@RequestMapping("/admin/product")
+@RequestMapping("/admin/products")
 public class ProductController {
 
     private final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
@@ -99,7 +99,7 @@ public class ProductController {
         return "redirect:/product";
     }
     
-    @GetMapping("/{id}")
+    @GetMapping("/details/{id}")
     public String product(@PathVariable Integer id, Model model) {
         model.addAttribute("product", productService.get(id));
         return "admin/product";
