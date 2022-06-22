@@ -38,8 +38,6 @@ public class SpringBootSecurity extends WebSecurityConfigurerAdapter {
         http.csrf().disable().authorizeRequests()
                 .antMatchers("/admin/**")
                 .hasRole("ADMIN")
-                .antMatchers("/product/**")
-                .hasRole("ADMIN")
                 .and()
                 .formLogin()
                 .loginPage("/user/login")
