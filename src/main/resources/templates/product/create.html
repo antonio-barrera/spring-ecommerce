@@ -32,7 +32,7 @@
             </h1>
 
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item"><a th:href="@{/admin}">Home</a></li>
                 <li class="breadcrumb-item active">Create Products</li>
             </ol>
 
@@ -93,15 +93,10 @@
 
         <!-- Footer -->
         <div th:include="admin/template.html::footer"></div>
-        <!--<footer class="py-5 bg-dark">
-            <div class="container">
-                <p class="m-0 text-center text-white">Copyright &copy; Spring eCommerce 2020</p>
-            </div>
-        </footer>-->
 
         <!-- Bootstrap core JavaScript -->
-        <script th:src="@{vendor/jquery/jquery.min.js}"></script>
-        <script th:src="@{vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+        <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+        <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
 
     </body>
 
